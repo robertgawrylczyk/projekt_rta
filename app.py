@@ -105,9 +105,7 @@ def learn():
             time.sleep(3)       
             pred = None
             for i in range(1, 101):
-                # Perform update
-                time.sleep(60)  
-                      
+                  
                 if pred != None:
                     diff = round(pred - current_price, 2)
                 else:
@@ -115,8 +113,10 @@ def learn():
                     
                 market_state = si.get_quote_data(api_stock_ticker)['marketState']
                 pred, MAPE, recommendation, pred_time, current_price = train_model(api_stock_ticker, start_date1, interval1)      
-                
+        
                 yield f'data: Prediction no. {i} for {pred_time}: {pred} USD, curent price: {current_price}, MAPE: {MAPE}% market state: {market_state}, recommendation: {recommendation}, last pred diff: {diff} \n\n'
+                
+                time.sleep(60)
 
         yield 'data: close\n\n'
 
