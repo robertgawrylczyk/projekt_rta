@@ -25,7 +25,7 @@ def prepare_data(stocks_ticker, start_date, interval):
             df[f'{i}_lag{j+1}'] = df[i].shift(j+1)
     last_row = df.iloc[-1,].values
     pred_time = df.iloc[-1,].name + datetime.timedelta(minutes=1)
-    df['close_next_day'] = df['close'].shift(-1)
+    df['close_next_minute'] = df['close'].shift(-1)
     df = df.dropna()
     return df, last_row, pred_time
 
@@ -44,12 +44,12 @@ def split_data(df):
     validation_data    = df[(sample_list <= 1 - train_fraction) & (sample_list > test_fraction)]
     test_data          = df[(sample_list <= test_fraction) & (sample_list >= 0)]
 
-    X_train = np.array(train_data.drop(['close_next_day'], axis = 1))
-    y_train = np.array(train_data['close_next_day'])
-    X_validation = np.array(validation_data.drop(['close_next_day'], axis = 1))
-    y_validation = np.array(validation_data['close_next_day'])
-    X_test = np.array(test_data.drop(['close_next_day'], axis = 1))
-    y_test = np.array(test_data['close_next_day'])
+    X_train = np.array(train_data.drop(['close_next_minute'], axis = 1))
+    y_train = np.array(train_data['close_next_minute'])
+    X_validation = np.array(validation_data.drop(['close_next_minute'], axis = 1))
+    y_validation = np.array(validation_data['close_next_minute'])
+    X_test = np.array(test_data.drop(['close_next_minute'], axis = 1))
+    y_test = np.array(test_data['close_next_minute'])
     
     return X_train, y_train, X_validation, y_validation, X_test, y_test
 
