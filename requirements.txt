@@ -1,0 +1,10 @@
+requests
+pandas
+mplfinance
+matplotlib
+numpy
+sklearn
+numpy
+flask
+datetime
+yahoo_fin
