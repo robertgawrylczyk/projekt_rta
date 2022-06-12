@@ -106,20 +106,16 @@ def learn():
             pred = None
             for i in range(1, 101):
                 # Perform update
-                time.sleep(5)  
-                current_price = round(train_model(api_stock_ticker, start_date1, interval1)[4], 4) 
+                time.sleep(60)  
                       
                 if pred != None:
                     diff = round(pred - current_price, 2)
                 else:
                     diff = None
-                          
+                    
                 market_state = si.get_quote_data(api_stock_ticker)['marketState']
-                pred = train_model(api_stock_ticker, start_date1, interval1)[0]
-                MAPE = train_model(api_stock_ticker, start_date1, interval1)[1]  
-                recommendation = train_model(api_stock_ticker, start_date1, interval1)[2]  
-                pred_time = train_model(api_stock_ticker, start_date1, interval1)[3]  
-
+                pred, MAPE, recommendation, pred_time, current_price = train_model(api_stock_ticker, start_date1, interval1)      
+                
                 yield f'data: Prediction no. {i} for {pred_time}: {pred} USD, curent price: {current_price}, MAPE: {MAPE}% market state: {market_state}, recommendation: {recommendation}, last pred diff: {diff} \n\n'
 
         yield 'data: close\n\n'
@@ -140,5 +136,4 @@ def index():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)
-
 
